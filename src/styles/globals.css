@@ -1,0 +1,889 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-primary: #f8f9fc;
+  --bg-secondary: #eef0f6;
+  --bg-panel: #ffffff;
+  --text-primary: #1a1b26;
+  --text-secondary: #5c6078;
+  --border: #d5d9e8;
+  --accent: #5a7fd4;
+  --accent-soft: rgba(90, 127, 212, 0.14);
+}
+
+.dark {
+  --bg-primary: #12131c;
+  --bg-secondary: #181926;
+  --bg-panel: #1e1f2e;
+  --bg-elevated: #252638;
+  --text-primary: #eef0f6;
+  --text-secondary: #9498b0;
+  --border: #2e3044;
+  --accent: #7c9eff;
+  --accent-soft: rgba(124, 158, 255, 0.14);
+  --glow: rgba(124, 158, 255, 0.22);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+body {
+  font-family: 'Segoe UI Variable', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+.cm-editor {
+  height: 100%;
+  font-family: 'JetBrains Mono', Consolas, monospace;
+  font-size: 14px;
+}
+.cm-editor.cm-focused {
+  outline: none;
+}
+.cm-content {
+  padding: 24px 32px !important;
+  caret-color: var(--accent);
+}
+.cm-gutters {
+  background: transparent !important;
+  border: none !important;
+  color: var(--text-secondary) !important;
+}
+.cm-activeLine {
+  background: rgba(124, 158, 255, 0.06) !important;
+}
+input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.dark .cm-editor {
+  background: var(--bg-panel);
+  color: var(--text-primary);
+}
+
+.wiki-link {
+  color: var(--accent);
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: rgba(124, 158, 255, 0.4);
+}
+
+.panel {
+  background: var(--bg-panel);
+  border-color: var(--border);
+}
+
+.btn {
+  @apply inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors;
+}
+.btn-primary {
+  @apply btn text-white;
+  background: var(--accent);
+}
+.btn-primary:hover {
+  opacity: 0.9;
+}
+.btn-ghost {
+  @apply btn hover:bg-[var(--bg-secondary)];
+  color: var(--text-secondary);
+}
+.btn-secondary {
+  @apply btn border;
+  border-color: var(--border);
+  background: var(--bg-elevated, var(--bg-panel));
+  color: var(--text-primary);
+}
+.btn-secondary:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft, rgba(124, 158, 255, 0.08));
+}
+.btn-icon {
+  @apply p-2 rounded-lg transition-colors hover:bg-[var(--bg-secondary)];
+  color: var(--text-secondary);
+}
+.btn-icon-sm {
+  @apply p-1 rounded-md transition-colors hover:bg-[var(--bg-secondary)] shrink-0;
+  color: var(--text-secondary);
+}
+
+/* Карточки расписания — компактные поля времени в узких столбцах */
+.schedule-slot-card {
+  @apply p-2.5 rounded-lg border text-sm;
+  background: var(--bg-panel);
+}
+.schedule-slot-card input[type='time'] {
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+.schedule-slot-card input[type='time']::-webkit-calendar-picker-indicator {
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  padding: 0;
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+.tag {
+  @apply inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium;
+}
+.tag-daily,
+.tag-task,
+.tag-project,
+.tag-note,
+.tag-week {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.app-header {
+  @apply flex items-center justify-between px-4 py-2.5 border-b shrink-0 gap-3;
+  background: linear-gradient(180deg, var(--bg-secondary) 0%, rgba(24, 25, 38, 0.92) 100%);
+  border-color: var(--border);
+  backdrop-filter: blur(12px);
+}
+
+.app-nav-item {
+  @apply inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-sm font-medium transition-all;
+  color: var(--text-secondary);
+}
+.app-nav-item:hover {
+  background: var(--bg-elevated, var(--bg-panel));
+  color: var(--text-primary);
+}
+.app-nav-item-active {
+  background: var(--accent-soft, rgba(124, 158, 255, 0.14));
+  color: var(--accent);
+  box-shadow: inset 0 0 0 1px rgba(124, 158, 255, 0.25);
+}
+
+.app-mobile-nav {
+  @apply border-b p-3 z-40;
+  border-color: var(--border);
+  background: var(--bg-secondary);
+}
+
+.app-logo {
+  @apply flex items-center justify-center w-16 h-16 rounded-2xl text-2xl font-bold;
+  background: linear-gradient(135deg, #7c9eff 0%, #5a7fd4 100%);
+  color: #12131c;
+  box-shadow: 0 12px 40px var(--glow, rgba(124, 158, 255, 0.25));
+}
+.app-logo-sm {
+  @apply flex items-center justify-center w-8 h-8 rounded-lg text-sm font-bold shrink-0;
+  background: linear-gradient(135deg, #7c9eff 0%, #5a7fd4 100%);
+  color: #12131c;
+}
+
+.app-splash {
+  @apply flex items-center justify-center min-h-full relative overflow-hidden;
+  background: radial-gradient(ellipse at top, #1e2035 0%, var(--bg-primary) 55%);
+}
+.app-splash-glow {
+  position: absolute;
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--glow, rgba(124, 158, 255, 0.2)) 0%, transparent 70%);
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.app-feature-card {
+  @apply flex gap-3 p-4 rounded-2xl border text-left transition-colors;
+  background: rgba(30, 31, 46, 0.7);
+  border-color: var(--border);
+}
+.app-feature-card:hover {
+  border-color: rgba(124, 158, 255, 0.35);
+}
+.app-feature-icon {
+  @apply flex items-center justify-center w-9 h-9 rounded-xl shrink-0;
+  background: var(--accent-soft, rgba(124, 158, 255, 0.14));
+  color: var(--accent);
+}
+
+.input {
+  @apply px-3 py-2 rounded-xl border text-sm outline-none transition-colors;
+  background: var(--bg-panel);
+  border-color: var(--border);
+  color: var(--text-primary);
+}
+.input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft, rgba(124, 158, 255, 0.12));
+}
+
+.workspace-node-panel {
+  @apply rounded-xl border shadow-2xl p-2.5;
+  background: var(--bg-elevated, var(--bg-panel));
+  border-color: var(--border);
+  min-width: 140px;
+  max-width: 200px;
+  pointer-events: auto;
+}
+.workspace-panel-btn {
+  @apply p-1.5 rounded-lg transition-colors;
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+}
+.workspace-panel-btn:hover {
+  color: var(--accent);
+  background: var(--accent-soft, rgba(124, 158, 255, 0.12));
+}
+
+.workspace-inline-editor {
+  @apply absolute z-40 flex flex-col border rounded-2xl shadow-2xl overflow-hidden;
+  right: 16px;
+  bottom: 16px;
+  width: min(480px, calc(100% - 32px));
+  height: min(360px, 45vh);
+  background: var(--bg-panel);
+  border-color: var(--border);
+}
+.workspace-inline-editor-header {
+  @apply flex items-center justify-between px-3 py-2 border-b shrink-0;
+  border-color: var(--border);
+  background: var(--bg-secondary);
+}
+.workspace-inline-editor-body {
+  @apply flex-1 min-h-0;
+}
+.workspace-editor-compact .cm-content {
+  padding: 12px 16px !important;
+}
+.workspace-editor-compact .cm-editor {
+  font-size: 13px;
+}
+
+.ctx-item {
+  @apply w-full text-left px-3 py-1.5 hover:bg-[var(--bg-secondary)];
+}
+
+/* ——— React Flow: тёмная тема (убираем белые minimap/controls) ——— */
+.dark .react-flow {
+  --xy-background-color: var(--bg-primary);
+  --xy-minimap-background-color: var(--bg-panel);
+  --xy-minimap-mask-background-color: rgba(18, 19, 28, 0.75);
+  --xy-minimap-node-background-color: var(--accent);
+  --xy-controls-button-background-color-default: var(--bg-panel);
+  --xy-controls-button-background-color-hover-default: var(--bg-elevated, var(--bg-secondary));
+  --xy-controls-button-color-default: var(--text-secondary);
+  --xy-controls-button-color-hover-default: var(--text-primary);
+  --xy-controls-button-border-color-default: var(--border);
+  --xy-edge-stroke-default: #4a4d66;
+  --xy-background-pattern-dots-color-default: #2a2c3e;
+}
+
+.react-flow__node {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+.react-flow__node.selected .note-card-inner {
+  box-shadow: 0 0 0 2px var(--accent), 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.react-flow__edge-text {
+  font-size: 10px !important;
+  fill: var(--text-secondary) !important;
+}
+
+.react-flow__edge-textbg {
+  fill: var(--bg-panel) !important;
+  fill-opacity: 0.92 !important;
+}
+
+.react-flow__minimap {
+  border-radius: 12px !important;
+  border: 1px solid var(--border) !important;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.react-flow__controls {
+  border-radius: 12px !important;
+  border: 1px solid var(--border) !important;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.react-flow__controls-button {
+  border-bottom-color: var(--border) !important;
+  width: 28px !important;
+  height: 28px !important;
+}
+
+.react-flow__controls-button:last-child {
+  border-bottom: none !important;
+}
+
+.react-flow__handle {
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.react-flow__node:hover .react-flow__handle,
+.react-flow__node.selected .react-flow__handle {
+  opacity: 1;
+}
+
+/* ——— База знаний: панель заметок + редактор ——— */
+.knowledge-notes-rail {
+  @apply hidden lg:flex flex-col shrink-0 border-r;
+  width: 220px;
+  border-color: var(--border);
+  background: var(--bg-secondary);
+}
+
+.knowledge-notes-rail-header {
+  @apply flex items-center justify-between px-3 py-2.5 shrink-0;
+}
+
+.knowledge-notes-rail-title {
+  @apply text-xs font-semibold uppercase tracking-wide;
+  color: var(--text-secondary);
+}
+
+.knowledge-notes-search-wrap {
+  @apply relative px-2 pb-2 shrink-0;
+}
+
+.knowledge-notes-search-icon {
+  @apply absolute left-4 top-2.5;
+  color: var(--text-secondary);
+}
+
+.knowledge-notes-search {
+  @apply w-full pl-8 py-1.5 text-xs;
+}
+
+.knowledge-notes-list {
+  @apply flex-1 overflow-y-auto px-1.5 space-y-0.5 min-h-0;
+}
+
+.knowledge-note-row {
+  @apply w-full flex items-center gap-2 px-2.5 py-2 rounded-lg text-sm transition-colors;
+  color: var(--text-primary);
+}
+
+.knowledge-note-row:hover {
+  background: var(--bg-panel);
+}
+
+.knowledge-note-row-active {
+  background: var(--accent-soft, rgba(124, 158, 255, 0.14));
+  color: var(--accent);
+}
+
+.knowledge-note-links {
+  @apply text-[10px] px-1.5 py-0.5 rounded-full shrink-0;
+  background: var(--bg-panel);
+  color: var(--text-secondary);
+}
+
+.knowledge-notes-empty {
+  @apply text-xs px-2 py-4 text-center;
+  color: var(--text-secondary);
+}
+
+.knowledge-notes-create {
+  @apply flex items-center justify-center gap-2 mx-2 mb-2 py-2 rounded-xl text-xs font-medium shrink-0 transition-colors;
+  color: var(--text-secondary);
+  border: 1px dashed var(--border);
+}
+
+.knowledge-notes-create:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-soft, rgba(124, 158, 255, 0.08));
+}
+
+.knowledge-editor-pane {
+  @apply hidden xl:flex flex-col shrink-0 border-r min-h-0;
+  width: min(420px, 34vw);
+  border-color: var(--border);
+  background: var(--bg-panel);
+}
+
+.knowledge-editor-empty {
+  @apply hidden xl:flex flex-col items-center justify-center gap-3 shrink-0 border-r min-h-0 px-6;
+  width: min(420px, 34vw);
+  border-color: var(--border);
+  background: var(--bg-panel);
+}
+
+.knowledge-editor-empty-icon {
+  @apply flex items-center justify-center w-14 h-14 rounded-2xl;
+  background: var(--accent-soft, rgba(124, 158, 255, 0.12));
+  color: var(--accent);
+}
+
+.knowledge-editor-header {
+  @apply flex items-center gap-2 px-4 py-3 border-b shrink-0;
+  border-color: var(--border);
+  background: var(--bg-secondary);
+}
+
+.knowledge-editor-body {
+  @apply flex-1 min-h-0;
+}
+
+.knowledge-graph-pane {
+  @apply flex flex-col flex-1 min-w-0 min-h-0;
+}
+
+.note-card-inner {
+  @apply px-3.5 py-2.5 rounded-xl border shadow-md text-sm font-medium cursor-grab active:cursor-grabbing transition-shadow;
+  background: var(--bg-panel);
+  color: var(--text-primary);
+  min-width: 120px;
+  max-width: 200px;
+}
+
+.note-card-person {
+  @apply flex items-center justify-center rounded-full border-2 shadow-md cursor-grab active:cursor-grabbing;
+  width: 80px;
+  height: 80px;
+  background: var(--bg-panel);
+}
+
+.workspace-canvas .react-flow {
+  background: var(--bg-primary);
+}
+
+.workspace-save-status {
+  @apply inline-flex items-center justify-center w-6 h-6 rounded-md text-xs font-medium shrink-0;
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+}
+.workspace-save-status-error {
+  color: var(--accent);
+}
+
+.note-card-outer {
+  @apply rounded-xl border-2 shadow-md overflow-hidden;
+  background: var(--bg-panel);
+  min-width: 140px;
+  max-width: 420px;
+}
+.note-card-expanded {
+  min-width: 300px;
+  max-width: 480px;
+}
+.note-card-header {
+  @apply flex items-center gap-2 px-3 py-2 border-b;
+  border-color: var(--border);
+  background: var(--bg-secondary);
+}
+.note-card-title {
+  @apply text-sm font-medium flex-1 truncate cursor-text select-text;
+}
+.note-card-title-input {
+  @apply flex-1 text-sm bg-transparent border-b outline-none;
+  border-color: var(--accent);
+  color: var(--text-primary);
+}
+.note-card-expand-btn {
+  @apply p-1 rounded-md shrink-0 transition-colors;
+  color: var(--text-secondary);
+}
+.note-card-expand-btn:hover {
+  color: var(--accent);
+  background: var(--accent-soft, rgba(124, 158, 255, 0.12));
+}
+.note-card-body {
+  height: 220px;
+  min-width: 280px;
+  overflow: hidden;
+}
+.canvas-note-loading {
+  @apply text-xs p-3;
+  color: var(--text-secondary);
+}
+.react-flow-handle-dot {
+  width: 12px !important;
+  height: 12px !important;
+  background: var(--accent) !important;
+  border: 2px solid var(--bg-panel) !important;
+  opacity: 0.85;
+}
+.react-flow-handle-dot::after {
+  content: '';
+  position: absolute;
+  inset: -12px;
+}
+.note-handle-top {
+  top: -6px !important;
+}
+.note-handle-bottom {
+  bottom: -6px !important;
+}
+
+.note-dock {
+  @apply fixed z-50 flex flex-col rounded-2xl border shadow-2xl overflow-hidden;
+  border-color: var(--border);
+  background: var(--bg-panel);
+}
+.note-dock-header {
+  @apply flex items-center gap-2 px-3 py-2 border-b cursor-move shrink-0;
+  border-color: var(--border);
+  background: var(--bg-secondary);
+}
+.note-dock-body {
+  @apply flex flex-1 min-h-0;
+}
+.note-dock-list {
+  @apply flex flex-col shrink-0 border-r;
+  width: 200px;
+  border-color: var(--border);
+  background: var(--bg-secondary);
+}
+.note-dock-editor {
+  @apply flex flex-col flex-1 min-w-0 min-h-0;
+}
+.note-dock-resize {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 14px;
+  height: 14px;
+  cursor: nwse-resize;
+}
+.note-dock-resize::after {
+  content: '';
+  position: absolute;
+  right: 3px;
+  bottom: 3px;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid var(--text-secondary);
+  border-bottom: 2px solid var(--text-secondary);
+  opacity: 0.5;
+}
+
+.react-flow__node .nodrag,
+.react-flow__node .nopan {
+  cursor: default;
+}
+.react-flow__node .nowheel {
+  pointer-events: auto;
+}
+
+/* Ручка ресайза — без «плавника» сверху */
+.node-resizer-line {
+  border-color: rgba(124, 158, 255, 0.35) !important;
+}
+.node-resizer-handle {
+  width: 8px !important;
+  height: 8px !important;
+  border-radius: 2px !important;
+  background: var(--bg-panel) !important;
+  border: 1px solid var(--accent) !important;
+}
+.react-flow__resize-control.line.top,
+.react-flow__resize-control.line.bottom,
+.react-flow__resize-control.line.left,
+.react-flow__resize-control.line.right {
+  visibility: hidden;
+}
+
+.workspace-search-wrap {
+  min-width: 140px;
+}
+.workspace-search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-secondary);
+  pointer-events: none;
+}
+.workspace-search-input {
+  padding-left: 2rem !important;
+}
+
+.header-note-strip {
+  @apply flex items-center gap-1.5 flex-1 min-w-0 max-w-sm;
+}
+.header-note-strip-field {
+  @apply relative flex-1 min-w-0;
+}
+.header-note-strip-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-secondary);
+  pointer-events: none;
+}
+.header-note-strip-input {
+  @apply input w-full text-sm py-1.5;
+  padding-left: 2rem !important;
+}
+.header-note-strip-dropdown {
+  @apply absolute left-0 right-0 top-full mt-1 z-50 rounded-xl border shadow-xl py-1 max-h-48 overflow-y-auto;
+  background: var(--bg-panel);
+  border-color: var(--border);
+}
+.header-note-strip-item {
+  @apply w-full text-left px-3 py-2 text-sm hover:bg-[var(--bg-secondary)];
+}
+.header-note-strip-active {
+  @apply text-xs text-[var(--text-secondary)] max-w-[120px];
+}
+
+.help-popover-wrap {
+  position: relative;
+}
+.help-popover {
+  @apply absolute left-0 top-full mt-1 z-50 rounded-xl border shadow-xl p-3 w-72;
+  background: var(--bg-panel);
+  border-color: var(--border);
+}
+.help-popover-floating {
+  position: fixed;
+  z-index: 9999;
+}
+.help-popover-title {
+  @apply text-sm font-semibold mb-2;
+  color: var(--accent);
+}
+.help-popover-list {
+  @apply text-xs space-y-1.5 list-disc pl-4;
+  color: var(--text-secondary);
+}
+
+.link-orb-panel {
+  @apply absolute left-3 bottom-16 z-30 rounded-xl border shadow-xl overflow-hidden;
+  width: 280px;
+  background: var(--bg-panel);
+  border-color: var(--border);
+}
+.link-orb-panel-collapsed .link-orb-canvas {
+  display: none;
+}
+.link-orb-toggle {
+  @apply w-full text-left px-3 py-2 text-xs font-medium border-b;
+  border-color: var(--border);
+  color: var(--text-secondary);
+}
+.link-orb-canvas {
+  height: 180px;
+}
+
+.react-flow__node {
+  padding: 0 !important;
+}
+.react-flow__node > div {
+  width: 100%;
+  height: 100%;
+}
+
+.orb-graph-view {
+  background: radial-gradient(ellipse at center, rgba(124, 158, 255, 0.06) 0%, transparent 70%);
+}
+.orb-graph-empty {
+  @apply flex items-center justify-center h-full text-sm px-8 text-center;
+  color: var(--text-secondary);
+}
+.orb-graph-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%);
+  max-width: min(640px, 90%);
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-secondary);
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 6px 12px;
+  pointer-events: none;
+}
+
+.orb-back-btn,
+.orb-fit-btn {
+  position: absolute;
+  z-index: 5;
+  top: 12px;
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--bg-panel);
+  color: var(--text-primary);
+}
+
+.orb-back-btn { left: 12px; }
+.orb-fit-btn { right: 12px; }
+
+.modal-search-wrap {
+  position: relative;
+}
+.modal-search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-secondary);
+  pointer-events: none;
+  z-index: 1;
+}
+.modal-search-input {
+  padding-left: 2rem !important;
+}
+
+.workspace-selection-bar {
+  @apply absolute left-1/2 top-3 z-40 -translate-x-1/2 flex items-center gap-3 px-4 py-2 rounded-full border shadow-lg text-sm;
+  background: var(--bg-panel);
+  border-color: var(--border);
+}
+.workspace-selection-btn {
+  @apply inline-flex items-center gap-1.5 text-red-400 hover:text-red-300 text-xs font-medium;
+}
+
+.knowledge-folder-group {
+  @apply mb-1;
+}
+.knowledge-folder-header {
+  @apply w-full flex items-center gap-2 px-2 py-1.5 text-xs font-semibold rounded-lg transition-colors;
+  color: var(--text-secondary);
+}
+.knowledge-folder-header:hover {
+  background: var(--bg-secondary);
+}
+.knowledge-note-row-nested {
+  padding-left: 1.75rem !important;
+}
+.knowledge-notes-more {
+  @apply w-full text-left text-xs py-2 px-3 opacity-70 hover:opacity-100;
+  color: var(--accent);
+}
+
+.notes-view {
+  background: var(--bg-primary);
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+
+.notes-rail-standalone {
+  display: flex !important;
+  width: 260px;
+  min-width: 220px;
+  max-width: 320px;
+}
+
+.knowledge-editor-full {
+  display: flex !important;
+  flex: 1;
+  width: auto !important;
+  max-width: none !important;
+  min-width: 0;
+  border-right: none !important;
+  min-height: 0;
+}
+
+.today-view {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.today-summary {
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+}
+
+.mentions-pane {
+  width: 240px;
+  min-width: 200px;
+  flex-shrink: 0;
+  overflow-y: auto;
+  border-left: 1px solid var(--border);
+  background: var(--bg-panel);
+  padding: 0.75rem;
+}
+
+@media (max-width: 900px) {
+  .mentions-pane {
+    display: none;
+  }
+}
+
+.react-flow__attribution {
+  display: none !important;
+}
+
+.note-read {
+  color: var(--text-primary);
+  line-height: 1.55;
+  overflow-x: auto;
+}
+.note-read h1, .note-read h2, .note-read h3 {
+  margin: 0.8em 0 0.35em;
+  font-weight: 650;
+}
+.note-read h1 { font-size: 1.35rem; }
+.note-read h2 { font-size: 1.05rem; }
+.note-read p { margin: 0.4em 0; }
+.note-read ul { margin: 0.4em 0 0.4em 1.2em; }
+.note-read a { color: var(--accent); }
+.note-read table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.6em 0 1em;
+  font-size: 0.92rem;
+}
+.note-read th,
+.note-read td {
+  border: 1px solid var(--border);
+  padding: 0.45rem 0.7rem;
+  text-align: left;
+  vertical-align: top;
+}
+.note-read th {
+  background: var(--bg-secondary);
+  font-weight: 600;
+}
+.note-read-empty {
+  color: var(--text-secondary);
+}
